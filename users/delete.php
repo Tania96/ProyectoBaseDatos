@@ -1,5 +1,5 @@
 <?php
-require_once "../../models/User.php";
+require_once "../models/User.php";
 $db = new Database;
 $user = new User($db);
 $id = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
@@ -9,4 +9,4 @@ if( $id )
     $user->setId($id);
     $user->delete();
 }
-header("Location:" . "../users/list.php");
+header("Location:" . "list.php");

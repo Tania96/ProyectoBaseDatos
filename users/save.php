@@ -1,13 +1,12 @@
 <?php
-require_once "../../models/User.php";
+require_once "../models/User.php";
 if (empty($_POST['submit']))
 {
-      header("Location:" . "../users/list.php");
+      header("Location:" . "list.php");
       exit;
 }
 
 $args = array(
-    'id' => FILTER_SANITIZE_STRING,
     'username'  => FILTER_SANITIZE_STRING,
     'password'  => FILTER_SANITIZE_STRING,
 );
@@ -19,4 +18,4 @@ $user = new User($db);
 $user->setUsername($post->username);
 $user->setPassword($post->password);
 $user->save();
-header("Location:" . "../users/list.php");
+header("Location:" . "list.php");

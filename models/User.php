@@ -1,6 +1,6 @@
 <?php
-require_once("../../db/Database.php");
-require_once("../../interfaces/IUser.php");
+require_once("../db/Database.php");
+require_once("../interfaces/IUser.php");
  
 class User implements IUser
 {
