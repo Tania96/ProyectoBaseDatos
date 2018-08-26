@@ -111,7 +111,7 @@ class User implements IUser
     {
         if( ! $user )
         {
-            header("Location:" . User::baseurl() . "app/list.php");
+            header("Location:" . User::baseurl() . "/list.php");
         }
     }
 }

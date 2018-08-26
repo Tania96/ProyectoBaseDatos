@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8">
+    <title>Listado de Regiones</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de Regiones</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +51,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Gestion Centros de Investagacion (LRC)</a>
+                <a class="navbar-brand" href="index.html">Inicio</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -49,10 +62,10 @@
                         <a href="../menu.html"><i class="fa fa-fw fa-dashboard"></i> Menu</a>
                     </li>
                     <li class="active">
-                        <a href="list.php"><i class="fa fa-fw fa-bar-chart-o"></i> Usuarios</a>
+                        <a href="../users/list.php"><i class="fa fa-fw fa-bar-chart-o"></i> Usuario</a>
                     </li>
                     <li>
-                        <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
+                        <a href="list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
@@ -93,7 +106,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Usuarios
+                            Regiones
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -106,55 +119,27 @@
 
 
                         </ol>
-                        <?php
-                                         require_once "../models/User.php";
-                                        //require_once "../crudpgsql/models/User.php";
-                                        $db = new Database;
-                                        $user = new User($db);
-                                        $users = $user->get();
-                                        ?>
-                                       
-                                                <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
-                                                    <a class="btn btn-info" href="add.php">Add user</a>
-                                                </div>
-                                                <?php
-                                                if( ! empty( $users ) )
-                                                {
-                                                ?>
-                                                <table class="table table-striped">
-                                                    <tr>
-                                                        <th>Id</th>
-                                                        <th>Username</th>
-                                                        <th>Password</th>
-                                                        <th>Created At</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                    <?php foreach( $users as $user )
-                                                    {
-                                                    ?>
-                                                        <tr>
-                                                            <td><?php echo $user->id ?></td>
-                                                            <td><?php echo $user->username ?></td>
-                                                            <td><?php echo $user->password ?></td>
-                                                            <td><?php echo $user->created_at ?></td>
-                                                            <td>
-                                                                <a class="btn btn-info" href="edit.php?user=<?php echo $user->id ?>">Edit</a> 
-                                                                <a class="btn btn-info" href="delete.php?user=<?php echo $user->id ?>">Delete</a>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </table>
-                                                <?php
-                                                }
-                                                else
-                                                {
-                                                ?>
-                                                <div class="alert alert-danger" style="margin-top: 100px">Any user has been registered</div>
-                                                <?php
-                                                }
-                                                ?>
+                       <?php
+    require_once "../models/User.php";
+    ?>
+    <div class="container">
+        <div class="col-lg-12">
+            <h2 class="text-center text-primary">Add user</h2>
+            <form action="save.php" method="POST">
+            <div class="form-group">
+                    <label for="password">ID de Region</label>
+                    <input type="number" name="id_reg" value="" class="form-control" id="password" placeholder="Password">
+                </div>   
+            
+            <div class="form-group">
+                    <label for="username">Nombre Region</label>
+                    <input type="text" name="name_reg" value="" class="form-control" id="username" placeholder="Username">
+                </div>
+               
+                <input type="submit" name="submit" class="btn btn-default" value="Save user" />
+            </form>
+        </div>
+    </div>
                     </div>
                 </div>
                 <!-- /.row -->
