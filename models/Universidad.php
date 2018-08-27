@@ -1,43 +1,43 @@
 <?php
 require_once("../db/Database.php");
-require_once("../interfaces/ICiudad.php");
+require_once("../interfaces/IUniversidad.php");
 
 
-class Ciudad implements ICiudad{
+class Universidad implements IUniversidad{
 
     private $con;
+    private $id_u;
+    private $name_u;
     private $id_ciu;
-    private $name_ciu;
-    private $id_reg;
     
     public function __construct(Database $db)
     {
     $this->con = new $db;
     }
 
-    public function setId($id_ciu)
+    public function setId($id_u)
     {
+        $this->id_u = $id_u;
+    }
+
+    public function setIDR($id_ciu){
+
         $this->id_ciu = $id_ciu;
     }
-
-    public function setIDR($id_reg){
-
-        $this->id_reg = $id_reg;
-    }
  
-    public function setUsername($name_ciu)
+    public function setUsername($name_u)
     {
-        $this->name_ciu = $name_ciu;
+        $this->name_u = $name_u;
     }
 
     //insertamos ciudades en una tabla con postgreSql
  public function save()
  {
  try{
- $query = $this->con->prepare('INSERT INTO CIUDAD (id_ciu, name_ciu,id_reg) values (?,?,?)');
- $query->bindParam(1, $this->id_ciu, PDO::PARAM_INT);
- $query->bindParam(2, $this->name_ciu, PDO::PARAM_STR);
- $query->bindParam(3, $this->id_reg, PDO::PARAM_INT);
+ $query = $this->con->prepare('INSERT INTO UNIVERSIDAD (id_u, name_u,id_ciu) values (?,?,?)');
+ $query->bindParam(1, $this->id_u, PDO::PARAM_INT);
+ $query->bindParam(2, $this->name_u, PDO::PARAM_STR);
+ $query->bindParam(3, $this->id_ciu, PDO::PARAM_INT);
  $query->execute();
  $this->con->close();
  }
@@ -50,12 +50,12 @@ class Ciudad implements ICiudad{
  public function update()
  {
  try{
- $query = $this->con->prepare('UPDATE CIUDAD SET name_ciu = ?, id_reg = ?  WHERE id_ciu = ?');
+ $query = $this->con->prepare('UPDATE UNIVERSIDAD SET name_u = ?, id_ciu = ?  WHERE id_u = ?');
  
  
- $query->bindParam(1, $this->name_ciu, PDO::PARAM_STR);
- $query->bindParam(2, $this->id_reg, PDO::PARAM_INT);
- $query->bindParam(3, $this->id_ciu, PDO::PARAM_INT);
+ $query->bindParam(1, $this->name_u, PDO::PARAM_STR);
+ $query->bindParam(2, $this->id_ciu, PDO::PARAM_INT);
+ $query->bindParam(3, $this->id_u, PDO::PARAM_INT);
  $query->execute();
  $this->con->close();
  }
@@ -69,17 +69,17 @@ class Ciudad implements ICiudad{
  public function get()
  {
  try{
-            if(is_int($this->id_ciu))
+            if(is_int($this->id_u))
             {
-                $query = $this->con->prepare('SELECT * FROM CIUDAD WHERE id_ciu = ?');
-                $query->bindParam(1, $this->id_ciu, PDO::PARAM_INT);
+                $query = $this->con->prepare('SELECT * FROM UNIVERSIDAD WHERE id_u = ?');
+                $query->bindParam(1, $this->id_u, PDO::PARAM_INT);
                 $query->execute();
      $this->con->close();
      return $query->fetch(PDO::FETCH_OBJ);
             }
             else
             {
-                $query = $this->con->prepare('SELECT * FROM CIUDAD');
+                $query = $this->con->prepare('SELECT * FROM UNIVERSIDAD');
      $query->execute();
      $this->con->close();
      return $query->fetchAll(PDO::FETCH_OBJ);
@@ -95,8 +95,8 @@ class Ciudad implements ICiudad{
  public function delete()
  {
      try{
-         $query = $this->con->prepare('DELETE FROM CIUDAD WHERE id_ciu = ?');
-         $query->bindParam(1, $this->id_ciu, PDO::PARAM_INT);
+         $query = $this->con->prepare('DELETE FROM UNIVERSIDAD WHERE id_u = ?');
+         $query->bindParam(1, $this->id_u, PDO::PARAM_INT);
          $query->execute();
          $this->con->close();
          return true;
@@ -117,7 +117,7 @@ class Ciudad implements ICiudad{
  {
      if( ! $region )
      {
-         header("Location:" . Ciudad::baseurl() . "/list.php");
+         header("Location:" . Universidad::baseurl() . "/list.php");
      }
  }
 

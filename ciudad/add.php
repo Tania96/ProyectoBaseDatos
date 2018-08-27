@@ -71,7 +71,7 @@
                         <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
@@ -106,11 +106,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Ciudades
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de usuarios</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Ciudades</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -120,21 +120,43 @@
 
                         </ol>
                        <?php
-    require_once "../models/User.php";
+    require_once "../models/Ciudad.php";
+    require_once "../models/Region.php";
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Add user</h2>
+            <h2 class="text-center text-primary">Agregar Ciudad</h2>
             <form action="save.php" method="POST">
             <div class="form-group">
-                    <label for="password">ID de Region</label>
-                    <input type="number" name="id_reg" value="" class="form-control" id="password" placeholder="Password">
+                    <label for="password">ID de Ciudad</label>
+                    <input type="number" name="id_ciu" value="" class="form-control" id="password" placeholder="Password">
                 </div>   
             
             <div class="form-group">
-                    <label for="username">Nombre Region</label>
-                    <input type="text" name="name_reg" value="" class="form-control" id="username" placeholder="Username">
+                    <label for="username">Nombre Ciudad</label>
+                    <input type="text" name="name_ciu" value="" class="form-control" id="username" placeholder="Username">
                 </div>
+
+                   <div class="form-group">
+                        <label for="username">Region Pertenece</label>
+                    
+                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
+                        <?php 
+                           $db = new Database;
+                           $region = new Region($db);
+                           $regiones = $region->get();
+                           foreach($regiones as $region){
+                              $region->id_reg; 
+                              $region->name_reg;
+
+                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
+                            
+                           }
+
+                        ?>
+                 </div>
+
+
                
                 <input type="submit" name="submit" class="btn btn-default" value="Save user" />
             </form>

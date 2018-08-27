@@ -114,7 +114,7 @@
                                         $users = $user->get();
                                         ?>
                                        
-                                                <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
+                                                <div class="col-lg-2 pull-right" style="margin-bottom: 10px">
                                                     <a class="btn btn-info" href="add.php">Add user</a>
                                                 </div>
                                                 <?php

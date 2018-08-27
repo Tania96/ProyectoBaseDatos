@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Listado de Regiones</title>
+    <title>Listado de Universidades</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Regiones</title>
+        <title>Listado de Universidades</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,13 +65,13 @@
                         <a href="../users/list.php"><i class="fa fa-fw fa-bar-chart-o"></i> Usuario</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
+                        <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
                         <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
@@ -106,11 +106,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Universidades
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de usuarios</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Universidades</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -120,21 +120,43 @@
 
                         </ol>
                        <?php
-    require_once "../models/User.php";
+    require_once "../models/Ciudad.php";
+    require_once "../models/Universidad.php";
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Add user</h2>
+            <h2 class="text-center text-primary">Agregar Universidad</h2>
             <form action="save.php" method="POST">
             <div class="form-group">
-                    <label for="password">ID de Region</label>
-                    <input type="number" name="id_reg" value="" class="form-control" id="password" placeholder="Password">
+                    <label for="password">ID de Universidad</label>
+                    <input type="number" name="id_u" value="" class="form-control" id="password" placeholder="Password">
                 </div>   
             
             <div class="form-group">
-                    <label for="username">Nombre Region</label>
-                    <input type="text" name="name_reg" value="" class="form-control" id="username" placeholder="Username">
+                    <label for="username">Nombre Universidad</label>
+                    <input type="text" name="name_u" value="" class="form-control" id="username" placeholder="Username">
                 </div>
+
+                   <div class="form-group">
+                        <label for="username">Ciudad Pertenece</label>
+                    
+                        <select type="number" name="id_ciu"  class="form-control" id="username" placeholder="Username">
+                        <?php 
+                           $db = new Database;
+                           $ciudad = new Ciudad($db);
+                           $ciudades = $ciudad->get();
+                           foreach($ciudades as $ciudad){
+                              $ciudad->id_ciu; 
+                              $ciudad->name_ciu;
+
+                              echo '<option value = "'. $ciudad->id_ciu.'">'.$ciudad->name_ciu.'</option>';
+                            
+                           }
+
+                        ?>
+                 </div>
+
+
                
                 <input type="submit" name="submit" class="btn btn-default" value="Save user" />
             </form>

@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Listado de Regiones</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-    
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Regiones</title>
+        <title>Listado de Universidades</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Inicio</a>
+                <a class="navbar-brand" href="../index.html">Gestion Centros de Investagacion (LRC)</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -65,13 +52,13 @@
                         <a href="../users/list.php"><i class="fa fa-fw fa-bar-chart-o"></i> Usuario</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
+                        <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
                         <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
@@ -106,11 +93,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Ciudades
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de usuarios</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Universidades</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -119,27 +106,69 @@
 
 
                         </ol>
-                       <?php
-    require_once "../models/User.php";
-    ?>
-    <div class="container">
-        <div class="col-lg-12">
-            <h2 class="text-center text-primary">Add user</h2>
-            <form action="save.php" method="POST">
-            <div class="form-group">
-                    <label for="password">ID de Region</label>
-                    <input type="number" name="id_reg" value="" class="form-control" id="password" placeholder="Password">
-                </div>   
-            
-            <div class="form-group">
-                    <label for="username">Nombre Region</label>
-                    <input type="text" name="name_reg" value="" class="form-control" id="username" placeholder="Username">
-                </div>
-               
-                <input type="submit" name="submit" class="btn btn-default" value="Save user" />
-            </form>
-        </div>
-    </div>
+                        <?php
+                                         require_once "../models/Ciudad.php";
+                                         require_once "../models/Universidad.php";
+                                        //require_once "../crudpgsql/models/User.php";
+                                        $db = new Database;
+                                        $ciudad = new Ciudad($db);
+                                        $universidad = new Universidad($db);
+                                        $universidades = $universidad->get();
+                                        $ciudades = $ciudad->get();
+                                        ?>
+                                       
+                                                <div class="col-lg-2 pull-right" style="margin-bottom: 10px">
+                                                    <a class="btn btn-info" href="add.php">Agregar Universidad</a>
+                                                </div>
+                                                <?php
+                                                if( ! empty( $universidades ) )
+                                                {
+                                                ?>
+                                                <table class="table table-striped">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Nombre de Universidad</th>
+                                                        <th> Ciudad a que pertenece</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                    <?php foreach( $universidades as $universidad )
+                                                    {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $universidad->id_u ?></td>
+                                                            <td><?php echo $universidad->name_u ?></td>
+                                                            <td> <?php 
+                                                                            $db = new Database;
+                                                                            $ciudad = new Ciudad($db);
+                                                                            $ciudades = $ciudad->get();
+                                                                            foreach($ciudades as $ciudad){
+                                                                                $ciudad->id_ciu; 
+                                                                                $ciudad->name_ciu;
+                                                                                if($universidad->id_ciu == $ciudad->id_ciu)
+                                                                                echo '<option value = "'.$ciudad->id_ciu.'">'.$ciudad->name_ciu.'</option>';
+                                                                                
+                                                                            }
+
+                                                                            ?></td>
+
+                                                            <td>
+                                                                <a class="btn btn-info" href="edit.php?user=<?php echo $universidad->id_u ?>">Edit</a> 
+                                                                <a class="btn btn-info" href="delete.php?user=<?php echo $universidad->id_u ?>">Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </table>
+                                                <?php
+                                                }
+                                                else
+                                                {
+                                                ?>
+                                                <div class="alert alert-danger" style="margin-top: 100px">Any user has been registered</div>
+                                                <?php
+                                                }
+                                                ?>
                     </div>
                 </div>
                 <!-- /.row -->

@@ -55,7 +55,7 @@
                         <a href="list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
@@ -114,7 +114,7 @@
                                         $regiones = $region->get();
                                         ?>
                                        
-                                                <div class="col-lg-1 pull-right" style="margin-bottom: 10px">
+                                                <div class="col-lg-2 pull-right" style="margin-bottom: 10px">
                                                     <a class="btn btn-info" href="add.php">Agregar Region</a>
                                                 </div>
                                                 <?php
