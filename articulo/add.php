@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Listado de Categorias</title>
+    <title>Listado de Articulos</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Categorias</title>
+        <title>Listado de Articulos</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -101,6 +101,9 @@
                     <li>
                         <a href="../conferencia/list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
                     </li>
+                    <li>
+                        <a href="../articulo/list.php"><i class="fa fa-fw fa-wrench"></i> Articulos</a>
+                    </li>
 
 
                     <li>
@@ -133,11 +136,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Categorias
+                            Articulos
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de categorias</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de articulos</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -147,20 +150,20 @@
 
                         </ol>
                        <?php
-    require_once "../models/Categoria.php";
+    require_once "../models/Articulo.php";
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Agregar Categoria</h2>
+            <h2 class="text-center text-primary">Agregar Articulo</h2>
             <form action="save.php" method="POST">
             <div class="form-group">
-                    <label for="password">ID de Categoria</label>
-                    <input type="number" name="id_cat" value="" class="form-control" id="password" placeholder="ID">
+                    <label for="password">ID Articulo</label>
+                    <input type="number" name="id_art" value="" class="form-control" id="password" placeholder="ID">
                 </div>   
             
             <div class="form-group">
-                    <label for="username">Descripcion de Categoria</label>
-                    <input type="text" name="descrip_cat" value="" class="form-control" id="username" placeholder="NameCategoria">
+                    <label for="username">Titulo de Articulo</label>
+                    <input type="text" name="titulo_art" value="" class="form-control" id="username" placeholder="NameCategoria">
                 </div>
                
                 <input type="submit" name="submit" class="btn btn-default" value="Save user" />

@@ -1,5 +1,5 @@
 <?php
-interface IConferencia{
+interface IArticulo{
     public function get();
     public function save();
     public function update();

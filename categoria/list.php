@@ -75,11 +75,17 @@
                     <li>
                         <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
                     </li>
-                    <li>o
+                    <li>
                         <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
                     </li>
                     <li>
                         <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
+                    </li>
+                    <li>
+                        <a href="../revista/list.php"><i class="fa fa-fw fa-wrench"></i> Revistas</a>
+                    </li>
+                    <li>
+                        <a href="../conferencia/list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>

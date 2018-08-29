@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Listado de Categorias</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-    
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Categorias</title>
+        <title>Listado de Conferencias</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,23 +61,22 @@
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
-                    </li>
-
-                    <li>
-                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
+                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i>Centros de Investigacion</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i>Roles</a>
                     </li>
                     <li>
-                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
+                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i>Categorias</a>
                     </li>
                     <li>
-                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
+                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i>Investigadores</a>
                     </li>
                     <li>
-                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
+                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i>Areas de Conocimiento</a>
+                    </li>
+                    <li>
+                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i>Tipos de Proyecto</a>
                     </li>
                     <li>
                         <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
@@ -99,10 +85,8 @@
                         <a href="../revista/list.php"><i class="fa fa-fw fa-wrench"></i> Revistas</a>
                     </li>
                     <li>
-                        <a href="../conferencia/list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
                     </li>
-
-
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
@@ -133,11 +117,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Categorias
+                            Conferencias
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de categorias</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de conferencias</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -146,24 +130,48 @@
 
 
                         </ol>
-                       <?php
-    require_once "../models/Categoria.php";
+                        <?php
+    require_once "../models/Conferencia.php";
+    $id_conf = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
+    if( ! $id_conf )
+    {
+        header("Location:" .  "list.php");
+    }
+    $db = new Database;
+    $newConferencia = new Conferencia($db);
+    $newConferencia->setId($id_conf);
+    $conferencia = $newConferencia->get();
+    $newConferencia->checkUser($conferencia);
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Agregar Categoria</h2>
-            <form action="save.php" method="POST">
+            <h2 class="text-center text-primary">Editar Conferencia <?php echo $conferencia->name_conf ?></h2>
+            <form action="update.php" method="POST">
             <div class="form-group">
-                    <label for="password">ID de Categoria</label>
-                    <input type="number" name="id_cat" value="" class="form-control" id="password" placeholder="ID">
-                </div>   
-            
-            <div class="form-group">
-                    <label for="username">Descripcion de Categoria</label>
-                    <input type="text" name="descrip_cat" value="" class="form-control" id="username" placeholder="NameCategoria">
+                    <label for="username">Nombre de Conferencia</label>
+                    <input type="text" name="name_conf" value="<?php echo $conferencia->name_conf ?>" class="form-control" id="username" placeholder="Username">
+
+                    <div class="form-group">
+                    <label for="username">Fecha de Inicio Conferencia</label>
+                    <input type="text" name="fecha_ini_conf" value="<?php echo $conferencia->fecha_ini_conf ?>" class="form-control" id="username" placeholder="Username">
+
+                     <div class="form-group">
+                    <label for="username">Fecha de Termino Conferencia</label>
+                    <input type="text" name="fecha_fin_conf" value="<?php echo $conferencia->fecha_fin_conf ?>" class="form-control" id="username" placeholder="Username">
+
+                     <div class="form-group">
+                    <label for="username">Pais Conferencia</label>
+                    <input type="text" name="pais" value="<?php echo $conferencia->pais ?>" class="form-control" id="username" placeholder="Username">
+
+                     <div class="form-group">
+                    <label for="username">Responsable de Conferencia</label>
+                    <input type="text" name="name_resp" value="<?php echo $conferencia->name_resp ?>" class="form-control" id="username" placeholder="Username">
+
+
+
                 </div>
-               
-                <input type="submit" name="submit" class="btn btn-default" value="Save user" />
+                <input type="hidden" name="id_conf" value="<?php echo $conferencia->id_conf ?>" />
+                <input type="submit" name="submit" class="btn btn-default" value="Update user" />
             </form>
         </div>
     </div>

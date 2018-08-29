@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Listado de Categorias</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-    
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Categorias</title>
+        <title>Listado de Conferencias</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Inicio</a>
+                <a class="navbar-brand" href="../index.html">Gestion Centros de Investigacion (LRC)</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -76,12 +63,11 @@
                     <li>
                         <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
                     </li>
-
                     <li>
                         <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
                     </li>
                     <li>
                         <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
@@ -99,10 +85,8 @@
                         <a href="../revista/list.php"><i class="fa fa-fw fa-wrench"></i> Revistas</a>
                     </li>
                     <li>
-                        <a href="../conferencia/list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
                     </li>
-
-
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
@@ -133,11 +117,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Categorias
+                            Conferencias
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de categorias</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Conferencias</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -146,27 +130,59 @@
 
 
                         </ol>
-                       <?php
-    require_once "../models/Categoria.php";
-    ?>
-    <div class="container">
-        <div class="col-lg-12">
-            <h2 class="text-center text-primary">Agregar Categoria</h2>
-            <form action="save.php" method="POST">
-            <div class="form-group">
-                    <label for="password">ID de Categoria</label>
-                    <input type="number" name="id_cat" value="" class="form-control" id="password" placeholder="ID">
-                </div>   
-            
-            <div class="form-group">
-                    <label for="username">Descripcion de Categoria</label>
-                    <input type="text" name="descrip_cat" value="" class="form-control" id="username" placeholder="NameCategoria">
-                </div>
-               
-                <input type="submit" name="submit" class="btn btn-default" value="Save user" />
-            </form>
-        </div>
-    </div>
+                        <?php
+                                         require_once "../models/Conferencia.php";
+                                        //require_once "../crudpgsql/models/User.php";
+                                        $db = new Database;
+                                        $conferencia = new Conferencia($db);
+                                        $conferencias = $conferencia->get();
+                                        ?>
+                                       
+                                                <div class="col-lg-2 pull-right" style="margin-bottom: 10px">
+                                                    <a class="btn btn-info" href="add.php">Agregar Conferencia</a>
+                                                </div>
+                                                <?php
+                                                if( ! empty( $conferencias ) )
+                                                {
+                                                ?>
+                                                <table class="table table-striped">
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Nombre de Conferencia</th>
+                                                        <th>Fecha Inicio</th>
+                                                        <th>Fecha Termino</th>
+                                                        <th>Pais</th>
+                                                        <th>Responsable</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                    <?php foreach( $conferencias as $conferencia)
+                                                    {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $conferencia->id_conf ?></td>
+                                                            <td><?php echo $conferencia->name_conf ?></td>
+                                                            <td><?php echo $conferencia->fecha_ini_conf ?></td>
+                                                            <td><?php echo $conferencia->fecha_fin_conf ?></td>
+                                                            <td><?php echo $conferencia->pais ?></td>
+                                                            <td><?php echo $conferencia->name_resp ?></td>
+                                                            <td>
+                                                                <a class="btn btn-info" href="edit.php?user=<?php echo $conferencia->id_conf ?>">Editar</a> 
+                                                                <a class="btn btn-info" href="delete.php?user=<?php echo $conferencia->id_conf ?>">Eliminar</a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </table>
+                                                <?php
+                                                }
+                                                else
+                                                {
+                                                ?>
+                                                <div class="alert alert-danger" style="margin-top: 100px">Any user has been registered</div>
+                                                <?php
+                                                }
+                                                ?>
                     </div>
                 </div>
                 <!-- /.row -->

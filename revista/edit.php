@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Listado de Categorias</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-    
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Categorias</title>
+        <title>Listado de Revistas</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,35 +61,29 @@
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
-                    </li>
-
-                    <li>
-                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
+                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i>Centros de Investigacion</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i>Roles</a>
                     </li>
                     <li>
-                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
+                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i>Categorias</a>
                     </li>
                     <li>
-                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
+                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i>Investigadores</a>
                     </li>
                     <li>
-                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
+                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i>Areas de Conocimiento</a>
                     </li>
                     <li>
                         <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
                     </li>
                     <li>
-                        <a href="../revista/list.php"><i class="fa fa-fw fa-wrench"></i> Revistas</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Revistas</a>
                     </li>
                     <li>
                         <a href="../conferencia/list.php"><i class="fa fa-fw fa-wrench"></i> Conferencias</a>
                     </li>
-
-
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
@@ -133,11 +114,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Categorias
+                            Revistas
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de categorias</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de revistas</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -146,26 +127,70 @@
 
 
                         </ol>
-                       <?php
-    require_once "../models/Categoria.php";
+                        <?php
+    require_once "../models/CategoriaRevista.php";
+    require_once "../models/Revista.php";
+
+
+    $id_rev = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
+ 
+    if( ! $id_rev )
+    {
+        header("Location:" .  "list.php");
+    }
+    $db = new Database;
+    $newRevista = new Revista($db);
+    $newRevista->setID($id_rev);
+    $revista = $newRevista->get();
+    $newRevista->checkUser($revista);
+  
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Agregar Categoria</h2>
-            <form action="save.php" method="POST">
-            <div class="form-group">
-                    <label for="password">ID de Categoria</label>
-                    <input type="number" name="id_cat" value="" class="form-control" id="password" placeholder="ID">
-                </div>   
-            
-            <div class="form-group">
-                    <label for="username">Descripcion de Categoria</label>
-                    <input type="text" name="descrip_cat" value="" class="form-control" id="username" placeholder="NameCategoria">
-                </div>
-               
-                <input type="submit" name="submit" class="btn btn-default" value="Save user" />
-            </form>
-        </div>
+            <h2 class="text-center text-primary">Editar Revista <?php echo $revista->name_rev ?></h2>
+            <form action="update.php" method="POST">
+                      
+                    <div class="form-group">
+                    <label for="username">Nombre de Revista</label>
+                    <input type="text" name="name_rev" value="<?php echo $revista->name_rev ?>" class="form-control" id="username" placeholder="NOMBRE REVISTA">
+                   
+                    <div class="form-group">
+                    <label for="username">Nombre Editor</label>
+                    <input type="text" name="name_edit" value="<?php echo $revista->name_edit ?>" class="form-control" id="username" placeholder="NOMBRE EDITOR">
+
+                    <div class="form-group">
+                    <label for="username">Factor de Impacto</label>
+                    <input type="text" name="fact_impacto" value="<?php echo $revista->fact_impacto ?>" class="form-control" id="username" placeholder="FACTOR DE IMPACTO">
+                   
+                   
+                   
+                   </div>
+
+                       <div class="form-group">
+                        <label for="username">Categoria que Pertenece</label>
+                    
+                        <select type="number" name="id_cat_rev"  class="form-control" id="username" placeholder="Username">
+                        <?php 
+                           $db = new Database;
+                           $categoriarevista = new CategoriaRevista($db);
+                           $categoriasrevista = $categoriarevista->get();
+                           foreach($categoriasrevista as $categoriarevista){
+                              $categoriarevista->id_cat_rev; 
+                              $categoriarevista->descrip_cat_rev;
+
+                              echo '<option value = "'.$categoriarevista->id_cat_rev.'">'.$categoriarevista->descrip_cat_rev.'</option>';
+                            
+                           }
+
+                        ?>
+                 </div>
+
+                    
+                   
+                    <input type="hidden" name="id_rev" value="<?php echo $revista->id_rev ?>" />
+                    <input type="submit" name="submit" class="btn btn-default" value="Update user" />
+                    </form>
+                    </div>
     </div>
                     </div>
                 </div>
@@ -176,9 +201,9 @@
 
                 <!-- Morris Charts -->
                
-            <!-- /.container-fluid -->
+                <!-- /.container-fluid -->
 
-        </div>
+                </div>
         <!-- /#page-wrapper -->
 
     </div>
