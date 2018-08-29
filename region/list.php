@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.html">Gestion Centros de Investagacion (LRC)</a>
+                <a class="navbar-brand" href="../index.html">Gestion Centros de Investigacion (LRC)</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -58,10 +58,28 @@
                         <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
+                    </li>
+                    <li>
+                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
+                    </li>
+                    <li>
+                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                    </li>
+                    <li>
+                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
+                    </li>
+                    <li>
+                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
+                    </li>
+                    <li>
+                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
+                    </li>
+                    <li>
+                        <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>

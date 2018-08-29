@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de categorias</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +55,7 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
@@ -67,7 +67,7 @@
                         <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
                     </li>
                     <li>
-                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
                     </li>
                     <li>
                         <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
@@ -111,11 +111,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Categorias
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de regiones</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de categorias</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -125,58 +125,32 @@
 
                         </ol>
                         <?php
-    require_once "../models/Ciudad.php";
-    require_once "../models/Region.php";
-
-
-    $id_ciu = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
- 
-    if( ! $id_ciu )
+    require_once "../models/Categoria.php";
+    $id_cat = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
+    if( ! $id_cat )
     {
         header("Location:" .  "list.php");
     }
     $db = new Database;
-    $newCiudad = new Ciudad($db);
-    $newCiudad->setID($id_ciu);
-    $ciudad = $newCiudad->get();
-    $newCiudad->checkUser($ciudad);
-  
+    $newCategoria = new Categoria($db);
+    $newCategoria->setId($id_cat);
+    $categoria = $newCategoria->get();
+    $newCategoria->checkUser($categoria);
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Editar Ciudad <?php echo $ciudad->name_ciu ?></h2>
+            <h2 class="text-center text-primary">Editar Categoria <?php echo $categoria->descrip_cat ?></h2>
             <form action="update.php" method="POST">
-                      
-                    <div class="form-group">
-                    <label for="username">Nombre de Ciudad</label>
-                    <input type="text" name="name_ciu" value="<?php echo $ciudad->name_ciu ?>" class="form-control" id="username" placeholder="NOMBRE CIUDAD">
-                    </div>
-
-                       <div class="form-group">
-                        <label for="username">Region Pertenece</label>
-                    
-                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
-                        <?php 
-                           $db = new Database;
-                           $region = new Region($db);
-                           $regiones = $region->get();
-                           foreach($regiones as $region){
-                              $region->id_reg; 
-                              $region->name_reg;
-
-                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
-                            
-                           }
-
-                        ?>
-                 </div>
-
-                    
-                   
-                    <input type="hidden" name="id_ciu" value="<?php echo $ciudad->id_ciu ?>" />
-                    <input type="submit" name="submit" class="btn btn-default" value="Update user" />
-                    </form>
-                    </div>
+                         
+            
+            <div class="form-group">
+                    <label for="username">Descripcion de Categoria</label>
+                    <input type="text" name="descrip_cat" value="<?php echo $categoria->descrip_cat ?>" class="form-control" id="username" placeholder="Username">
+                </div>
+                <input type="hidden" name="id_cat" value="<?php echo $categoria->id_cat ?>" />
+                <input type="submit" name="submit" class="btn btn-default" value="Update user" />
+            </form>
+        </div>
     </div>
                     </div>
                 </div>
@@ -187,9 +161,9 @@
 
                 <!-- Morris Charts -->
                
-                <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
 
-                </div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>

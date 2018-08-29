@@ -61,7 +61,22 @@
                         <a href="list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
+                    </li>
+                    <li>
+                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
+                    </li>
+                    <li>
+                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                    </li>
+                    <li>
+                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
+                    </li>
+                    <li>
+                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
+                    </li>
+                    <li>
+                        <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
@@ -93,7 +108,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Ciudades
+                            Universidades
                         </h1>
                         <ol class="breadcrumb">
                             <li>

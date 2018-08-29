@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de Centros de Investigaciones</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Inicio</a>
+                <a class="navbar-brand" href="../index.html">Gestion Centros de Investagaciones (LRC)</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -55,13 +55,13 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
                     </li>
                     <li>
                         <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
@@ -111,11 +111,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Centros de Investigacion
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de regiones</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Centros de Investigaciones</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -125,59 +125,70 @@
 
                         </ol>
                         <?php
-    require_once "../models/Ciudad.php";
-    require_once "../models/Region.php";
+                                         require_once "../models/CentroInvestigacion.php";
+                                         require_once "../models/Ciudad.php";
+                                        //require_once "../crudpgsql/models/User.php";
+                                        $db = new Database;
+                                        $centroinvestigacion = new CentroInvestigacion($db);
+                                        $ciudad = new Ciudad($db);
+                                        $ciudades = $ciudad->get();
+                                        $centrosinvestigaciones = $centroinvestigacion->get();
+                                        ?>
+                                       
+                                                <div class="col-lg-3 pull-right" style="margin-bottom: 10px">
+                                          <a class="btn btn-info" href="add.php">Agregar Centro de Investigacion</a>
+                                                </div>
+                                                <?php
+                                                if( ! empty( $centrosinvestigaciones ) )
+                                                {
+                                                ?>
+                                                <table class="table table-striped">
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Nombre de Centro de Investigacion</th>
+                                                        <th>Numero de Telefono</th>
+                                                        <th>Nombre de Ciudad</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                    <?php foreach( $centrosinvestigaciones as $centroinvestigacion )
+                                                    {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $centroinvestigacion->id_centro ?></td>
+                                                            <td><?php echo $centroinvestigacion->name_centro ?></td>
+                                                            <td><?php echo $centroinvestigacion->telefono ?></td>
+                                                            <td> <?php 
+                                                                            $db = new Database;
+                                                                            $ciudad = new Ciudad($db);
+                                                                            $ciudades = $ciudad->get();
+                                                                            foreach($ciudades as $ciudad){
+                                                                                $ciudad->id_ciu; 
+                                                                                $ciudad->name_ciu;
+                                                                                if($centroinvestigacion->id_ciu == $ciudad->id_ciu)
+                                                                                echo '<option value = "'.$ciudad->id_ciu.'">'.$ciudad->name_ciu.'</option>';
+                                                                                
+                                                                            }
 
+                                                                            ?></td>
 
-    $id_ciu = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
- 
-    if( ! $id_ciu )
-    {
-        header("Location:" .  "list.php");
-    }
-    $db = new Database;
-    $newCiudad = new Ciudad($db);
-    $newCiudad->setID($id_ciu);
-    $ciudad = $newCiudad->get();
-    $newCiudad->checkUser($ciudad);
-  
-    ?>
-    <div class="container">
-        <div class="col-lg-12">
-            <h2 class="text-center text-primary">Editar Ciudad <?php echo $ciudad->name_ciu ?></h2>
-            <form action="update.php" method="POST">
-                      
-                    <div class="form-group">
-                    <label for="username">Nombre de Ciudad</label>
-                    <input type="text" name="name_ciu" value="<?php echo $ciudad->name_ciu ?>" class="form-control" id="username" placeholder="NOMBRE CIUDAD">
-                    </div>
-
-                       <div class="form-group">
-                        <label for="username">Region Pertenece</label>
-                    
-                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
-                        <?php 
-                           $db = new Database;
-                           $region = new Region($db);
-                           $regiones = $region->get();
-                           foreach($regiones as $region){
-                              $region->id_reg; 
-                              $region->name_reg;
-
-                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
-                            
-                           }
-
-                        ?>
-                 </div>
-
-                    
-                   
-                    <input type="hidden" name="id_ciu" value="<?php echo $ciudad->id_ciu ?>" />
-                    <input type="submit" name="submit" class="btn btn-default" value="Update user" />
-                    </form>
-                    </div>
-    </div>
+                                                            <td>
+                                                                <a class="btn btn-info" href="edit.php?user=<?php echo $centroinvestigacion->id_centro ?>">Edit</a> 
+                                                                <a class="btn btn-info" href="delete.php?user=<?php echo $centroinvestigacion->id_centro ?>">Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </table>
+                                                <?php
+                                                }
+                                                else
+                                                {
+                                                ?>
+                                                <div class="alert alert-danger" style="margin-top: 100px">Any user has been registered</div>
+                                                <?php
+                                                }
+                                                ?>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -187,9 +198,9 @@
 
                 <!-- Morris Charts -->
                
-                <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
 
-                </div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>

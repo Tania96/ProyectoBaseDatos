@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de Investigadores</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,28 +55,28 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
+                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i>Centros de Investigacion</a>
                     </li>
                     <li>
-                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
+                        <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i>Roles</a>
                     </li>
                     <li>
-                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
+                        <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i>Categorias</a>
                     </li>
                     <li>
-                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i>Investigadores</a>
                     </li>
                     <li>
-                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
+                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i>Areas de Conocimiento</a>
                     </li>
                     <li>
-                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
+                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i>Tipos de Proyecto</a>
                     </li>
                     <li>
                         <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
@@ -111,11 +111,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Investigadores
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de regiones</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de investigadores</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -125,55 +125,117 @@
 
                         </ol>
                         <?php
+    require_once "../models/Categoria.php";
+    require_once "../models/Rol.php";
     require_once "../models/Ciudad.php";
-    require_once "../models/Region.php";
+    require_once "../models/Investigador.php";
 
 
-    $id_ciu = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
+
+    $id_inv = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
  
-    if( ! $id_ciu )
+    if( ! $id_inv )
     {
         header("Location:" .  "list.php");
     }
     $db = new Database;
-    $newCiudad = new Ciudad($db);
-    $newCiudad->setID($id_ciu);
-    $ciudad = $newCiudad->get();
-    $newCiudad->checkUser($ciudad);
+    $newInvestigador = new Investigador($db);
+    $newInvestigador->setID($id_inv);
+    $investigador = $newInvestigador->get();
+    $newInvestigador->checkUser($investigador);
   
     ?>
     <div class="container">
-        <div class="col-lg-12">
-            <h2 class="text-center text-primary">Editar Ciudad <?php echo $ciudad->name_ciu ?></h2>
+        <div class="col-lg-11">
+            <h2 class="text-center text-primary">Editar Investigador <?php echo $investigador->name_inv ?></h2>
             <form action="update.php" method="POST">
+            <div class="form-group">
+                    <label for="username">Rut Investigador</label>
+                    <input type="text" name="rut_inv" value="<?php echo $investigador->rut_inv ?>" class="form-control" id="username" placeholder="NOMBRE INVESTIGADOR">
                       
                     <div class="form-group">
-                    <label for="username">Nombre de Ciudad</label>
-                    <input type="text" name="name_ciu" value="<?php echo $ciudad->name_ciu ?>" class="form-control" id="username" placeholder="NOMBRE CIUDAD">
+                    <label for="username">Nombre de Investigador</label>
+                    <input type="text" name="name_inv" value="<?php echo $investigador->name_inv ?>" class="form-control" id="username" placeholder="NOMBRE INVESTIGADOR">
+                    
+                    <div class="form-group">
+                    <label for="username">Calle Investigador</label>
+                    <input type="text" name="calle_inv" value="<?php echo $investigador->calle_inv ?>" class="form-control" id="username" placeholder="CALLE INVESTIGADOR">
+
+                    <div class="form-group">
+                    <label for="username">Numero Investigador</label>
+                    <input type="text" name="numero_inv" value="<?php echo $investigador->numero_inv ?>" class="form-control" id="username" placeholder="NUMERO INVESTIGADOR">
+
+
                     </div>
 
                        <div class="form-group">
-                        <label for="username">Region Pertenece</label>
+                        <label for="username">Categoria Investigador</label>
                     
-                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
+                        <select type="number" name="id_cat"  class="form-control" id="username" placeholder="Username">
                         <?php 
                            $db = new Database;
-                           $region = new Region($db);
-                           $regiones = $region->get();
-                           foreach($regiones as $region){
-                              $region->id_reg; 
-                              $region->name_reg;
+                           $categoria = new Categoria($db);
+                           $categorias = $categoria->get();
+                           foreach($categorias as $categoria){
+                              $categoria->id_cat; 
+                              $categoria->descrip_cat;
 
-                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
+                              echo '<option value = "'.$categoria->id_cat.'">'.$categoria->descrip_cat.'</option>';
                             
                            }
 
                         ?>
+                    </div>
+                    <div class="form-group">
+ <label for="username">Rol Investigador</label>
+
+ <select type="number" name="id_rol"  class="form-control" id="username" placeholder="Username">
+ <?php 
+    $db = new Database;
+    $rol = new Rol($db);
+    $roles = $rol->get();
+    foreach($roles as $rol){
+       $rol->id_rol; 
+       $rol->descrip_rol;
+
+       echo '<option value = "'.$rol->id_rol.'">'.$rol->descrip_rol.'</option>';
+     
+    }
+
+ ?>
+</div>
+                
+                
+
                  </div>
+
+
+
+
+
+
+<div class="form-group">
+ <label for="username">Ciudad Pertenece</label>
+
+ <select type="number" name="id_ciu"  class="form-control" id="username" placeholder="Username">
+ <?php 
+    $db = new Database;
+    $ciudad = new Ciudad($db);
+    $ciudades = $ciudad->get();
+    foreach($ciudades as $ciudad){
+       $ciudad->id_ciu; 
+       $ciudad->name_ciu;
+
+       echo '<option value = "'.$ciudad->id_ciu.'">'.$ciudad->name_ciu.'</option>';
+     
+    }
+
+ ?>
+</div>
 
                     
                    
-                    <input type="hidden" name="id_ciu" value="<?php echo $ciudad->id_ciu ?>" />
+                    <input type="hidden" name="id_inv" value="<?php echo $investigador->id_inv ?>" />
                     <input type="submit" name="submit" class="btn btn-default" value="Update user" />
                     </form>
                     </div>

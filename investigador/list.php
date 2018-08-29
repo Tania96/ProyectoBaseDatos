@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de Regiones</title>
+        <title>Listado de Investigadores</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.html">Gestion Centros de Investagacion (LRC)</a>
+                <a class="navbar-brand" href="../index.html">Gestion Centros de Investigacion (LRC)</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -55,7 +55,7 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
@@ -70,13 +70,13 @@
                         <a href="../categoria/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias</a>
                     </li>
                     <li>
-                        <a href="../investigador/list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Investigadores</a>
                     </li>
                     <li>
-                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
+                        <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i>Areas de Conocimiento</a>
                     </li>
                     <li>
-                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
+                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i>Tipos de Proyecto</a>
                     </li>
                     <li>
                         <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
@@ -111,11 +111,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Ciudades
+                            Investigadores
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Ciudades</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de Investigadores</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -126,52 +126,109 @@
                         </ol>
                         <?php
                                          require_once "../models/Ciudad.php";
-                                         require_once "../models/Region.php";
+                                         require_once "../models/Investigador.php";
+                                         require_once "../models/Rol.php";
+                                         require_once "../models/Categoria.php";
                                         //require_once "../crudpgsql/models/User.php";
                                         $db = new Database;
                                         $ciudad = new Ciudad($db);
-                                        $region = new Region($db);
-                                        $regiones = $region->get();
                                         $ciudades = $ciudad->get();
+                                        $investigador = new Investigador($db);
+                                        $investigadores = $investigador->get();
+                                        $rol = new Rol($db);
+                                        $roles = $rol->get();
+                                        $categoria = new Categoria($db);
+                                        $categorias = $categoria->get();
+                                        
+                                        
+                                        
+                                        
+                                       ;
                                         ?>
                                        
                                                 <div class="col-lg-2 pull-right" style="margin-bottom: 10px">
-                                                    <a class="btn btn-info" href="add.php">Agregar Ciudad</a>
+                                                    <a class="btn btn-info" href="add.php">Agregar Investigador</a>
                                                 </div>
                                                 <?php
-                                                if( ! empty( $ciudades ) )
+                                                if( ! empty( $investigadores ) )
                                                 {
                                                 ?>
-                                                <table class="table table-striped">
+                                                <table class="table table-striped" style ="font-size:13.5px">
                                                     <tr>
-                                                        <th>Id</th>
-                                                        <th>Nombre de Ciudad</th>
-                                                        <th>Nombre Region
+                                                        
+                                                        <th>Rut Investigador</th>
+                                                        <th>Nombre Investigador</th>
+                                                        <th>Calle</th>
+                                                        <th>Numero</th>
+                                                        <th>Categoria</th>
+                                                        <th>Ciudad pertenece</th>
+                                                        <th>Rol Investigador</th>
                                                         <th>Actions</th>
                                                     </tr>
-                                                    <?php foreach( $ciudades as $ciudad )
+                                                    <?php foreach( $investigadores as $investigador )
                                                     {
                                                     ?>
                                                         <tr>
-                                                            <td><?php echo $ciudad->id_ciu ?></td>
-                                                            <td><?php echo $ciudad->name_ciu ?></td>
-                                                            <td> <?php 
-                                                                            $db = new Database;
-                                                                            $region = new Region($db);
-                                                                            $regiones = $region->get();
-                                                                            foreach($regiones as $region){
-                                                                                $region->id_reg; 
-                                                                                $region->name_reg;
-                                                                                if($ciudad->id_reg == $region->id_reg)
-                                                                                echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
-                                                                                
-                                                                            }
+                                                            <td><?php echo $investigador->rut_inv ?></td>
+                                                            <td><?php echo $investigador->name_inv ?></td>
+                                                            <td><?php echo $investigador->calle_inv ?></td>
+                                                            <td><?php echo $investigador->numero_inv ?></td>
 
-                                                                            ?></td>
+
+                                                            <td> <?php 
+                                                                    $db = new Database;
+                                                                    $categoria = new Categoria($db);
+                                                                    $categorias = $categoria->get();
+                                                                    foreach($categorias as $categoria){
+                                                                        $categoria->id_cat; 
+                                                                        $categoria->descrip_cat;
+                                                                        if($investigador->id_cat == $categoria->id_cat)
+                                                                        echo '<option value = "'.$categoria->id_cat.'">'.$categoria->descrip_cat.'</option>';                                                                                
+
+                                                                       
+                                                                        
+                                                                    }
+
+                                                                    ?>
+                                                            </td>
+                                                            
+                                                            
+                                                            <td> <?php 
+                                                                    $db = new Database;
+                                                                    $ciudad = new Ciudad($db);
+                                                                    $ciudades = $ciudad->get();
+                                                                    foreach($ciudades as $ciudad){
+                                                                        $ciudad->id_ciu; 
+                                                                        $ciudad->name_ciu;
+                                                                        if($investigador->id_ciu==$ciudad->id_ciu)
+
+                                                                        echo '<option value = "'.$ciudad->id_ciu.'">'.$ciudad->name_ciu.'</option>';
+                                                                        
+                                                                    }
+
+                                                                    ?>  
+                                                            </td>
+
+                                                            
+                                                            <td> <?php 
+                                                                    $db = new Database;
+                                                                    $rol = new Rol($db);
+                                                                    $roles = $rol->get();
+                                                                    foreach($roles as $rol){
+                                                                        $rol->id_rol; 
+                                                                        $rol->descrip_rol;
+                                                                        if($investigador->id_rol==$rol->id_rol)
+
+                                                                        echo '<option value = "'.$rol->id_rol.'">'.$rol->descrip_rol.'</option>';
+                                                                        
+                                                                    }
+
+                                                                    ?>
+                                                            </td>
 
                                                             <td>
-                                                                <a class="btn btn-info" href="edit.php?user=<?php echo $ciudad->id_ciu ?>">Edit</a> 
-                                                                <a class="btn btn-info" href="delete.php?user=<?php echo $ciudad->id_ciu ?>">Delete</a>
+                                                                <a class="btn btn-info" href="edit.php?user=<?php echo $investigador->id_inv ?>">Editar</a> 
+                                                                <a class="btn btn-info" href="delete.php?user=<?php echo $investigador->id_inv ?>">Eliminar</a>
                                                             </td>
                                                         </tr>
                                                     <?php

@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8">
+    <title>Listado de Categorias de Revista</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de Categorias de Revista</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +68,7 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
@@ -63,6 +76,7 @@
                     <li>
                         <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
                     </li>
+
                     <li>
                         <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
                     </li>
@@ -79,8 +93,9 @@
                         <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
                     </li>
                     <li>
-                        <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
                     </li>
+
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
@@ -111,11 +126,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Categorias de Revista
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de regiones</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de categoris de revista</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -124,59 +139,26 @@
 
 
                         </ol>
-                        <?php
-    require_once "../models/Ciudad.php";
-    require_once "../models/Region.php";
-
-
-    $id_ciu = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
- 
-    if( ! $id_ciu )
-    {
-        header("Location:" .  "list.php");
-    }
-    $db = new Database;
-    $newCiudad = new Ciudad($db);
-    $newCiudad->setID($id_ciu);
-    $ciudad = $newCiudad->get();
-    $newCiudad->checkUser($ciudad);
-  
+                       <?php
+    require_once "../models/CategoriaRevista.php";
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Editar Ciudad <?php echo $ciudad->name_ciu ?></h2>
-            <form action="update.php" method="POST">
-                      
-                    <div class="form-group">
-                    <label for="username">Nombre de Ciudad</label>
-                    <input type="text" name="name_ciu" value="<?php echo $ciudad->name_ciu ?>" class="form-control" id="username" placeholder="NOMBRE CIUDAD">
-                    </div>
-
-                       <div class="form-group">
-                        <label for="username">Region Pertenece</label>
-                    
-                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
-                        <?php 
-                           $db = new Database;
-                           $region = new Region($db);
-                           $regiones = $region->get();
-                           foreach($regiones as $region){
-                              $region->id_reg; 
-                              $region->name_reg;
-
-                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
-                            
-                           }
-
-                        ?>
-                 </div>
-
-                    
-                   
-                    <input type="hidden" name="id_ciu" value="<?php echo $ciudad->id_ciu ?>" />
-                    <input type="submit" name="submit" class="btn btn-default" value="Update user" />
-                    </form>
-                    </div>
+            <h2 class="text-center text-primary">Agregar Categoria de Revista</h2>
+            <form action="save.php" method="POST">
+            <div class="form-group">
+                    <label for="password">ID Categoria Revista</label>
+                    <input type="number" name="id_cat_rev" value="" class="form-control" id="password" placeholder="ID">
+                </div>   
+            
+            <div class="form-group">
+                    <label for="username">Descripcion de Categoria de Revista</label>
+                    <input type="text" name="descrip_cat_rev" value="" class="form-control" id="username" placeholder="NameCatRev">
+                </div>
+               
+                <input type="submit" name="submit" class="btn btn-default" value="Save user" />
+            </form>
+        </div>
     </div>
                     </div>
                 </div>
@@ -187,9 +169,9 @@
 
                 <!-- Morris Charts -->
                
-                <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
 
-                </div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>

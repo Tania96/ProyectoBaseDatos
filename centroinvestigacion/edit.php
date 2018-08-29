@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de centrosinvestigacion</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,13 +55,13 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
                     </li>
                     <li>
-                        <a href="../centroinvestigacion/list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Centros de Investigacion</a>
                     </li>
                     <li>
                         <a href="../rol/list.php"><i class="fa fa-fw fa-wrench"></i> Roles</a>
@@ -111,11 +111,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Ciudades
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de regiones</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de ciudades</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -125,46 +125,50 @@
 
                         </ol>
                         <?php
+    require_once "../models/CentroInvestigacion.php";
     require_once "../models/Ciudad.php";
-    require_once "../models/Region.php";
 
 
-    $id_ciu = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
+    $id_centro = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
  
-    if( ! $id_ciu )
+    if( ! $id_centro )
     {
         header("Location:" .  "list.php");
     }
     $db = new Database;
-    $newCiudad = new Ciudad($db);
-    $newCiudad->setID($id_ciu);
-    $ciudad = $newCiudad->get();
-    $newCiudad->checkUser($ciudad);
+    $newCentroInvestigacion = new CentroInvestigacion($db);
+    $newCentroInvestigacion->setId($id_centro);
+    $centroinvestigacion = $newCentroInvestigacion->get();
+    $newCentroInvestigacion->checkUser($centroinvestigacion);
   
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Editar Ciudad <?php echo $ciudad->name_ciu ?></h2>
+            <h2 class="text-center text-primary">Editar Centro de Investigacion <?php echo $centroinvestigacion->name_centro ?></h2>
             <form action="update.php" method="POST">
                       
                     <div class="form-group">
-                    <label for="username">Nombre de Ciudad</label>
-                    <input type="text" name="name_ciu" value="<?php echo $ciudad->name_ciu ?>" class="form-control" id="username" placeholder="NOMBRE CIUDAD">
+                    <label for="username">Nombre de Centro de Investigacion</label>
+                    <input type="text" name="name_centro" value="<?php echo $centroinvestigacion->name_centro ?>" class="form-control" id="username" placeholder="NOMBRE CENTRO DE INVESTIGACION">
+                    
+                    <div class="form-group">
+                    <label for="username">Numero de Telefono</label>
+                    <input type="number" name="telefono" value="<?php echo $centroinvestigacion->telefono ?>" class="form-control" id="username" placeholder="041-">
                     </div>
 
                        <div class="form-group">
-                        <label for="username">Region Pertenece</label>
+                        <label for="username">Ciudad Pertenece</label>
                     
-                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
+                        <select type="number" name="id_ciu" class="form-control" id="username" placeholder="Username">
                         <?php 
                            $db = new Database;
-                           $region = new Region($db);
-                           $regiones = $region->get();
-                           foreach($regiones as $region){
-                              $region->id_reg; 
-                              $region->name_reg;
+                           $ciudad = new Ciudad($db);
+                           $ciudades = $ciudad->get();
+                           foreach($ciudades as $ciudad){
+                              $ciudad->id_ciu; 
+                              $ciudad->name_ciu;
 
-                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
+                              echo '<option value = "'.$ciudad->id_ciu.'">'.$ciudad->name_ciu.'</option>';
                             
                            }
 
@@ -173,7 +177,7 @@
 
                     
                    
-                    <input type="hidden" name="id_ciu" value="<?php echo $ciudad->id_ciu ?>" />
+                    <input type="hidden" name="id_centro" value="<?php echo $centroinvestigacion->id_centro ?>" />
                     <input type="submit" name="submit" class="btn btn-default" value="Update user" />
                     </form>
                     </div>

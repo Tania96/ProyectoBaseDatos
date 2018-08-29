@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Listado de usuarios</title>
+        <title>Listado de tipos de proyecto</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +55,7 @@
                         <a href="../region/list.php"><i class="fa fa-fw fa-table"></i> Regiones</a>
                     </li>
                     <li>
-                        <a href="list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
+                        <a href="../ciudad/list.php"><i class="fa fa-fw fa-edit"></i> Ciudades</a>
                     </li>
                     <li>
                         <a href="../universidad/list.php"><i class="fa fa-fw fa-desktop"></i> Universidades</a>
@@ -76,7 +76,7 @@
                         <a href="../areaconocimiento/list.php"><i class="fa fa-fw fa-wrench"></i> Areas de Conocimiento</a>
                     </li>
                     <li>
-                        <a href="../tipoproyecto/list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
+                        <a href="list.php"><i class="fa fa-fw fa-wrench"></i> Tipos de Proyecto</a>
                     </li>
                     <li>
                         <a href="../categoriarevista/list.php"><i class="fa fa-fw fa-wrench"></i> Categorias de Revista</a>
@@ -111,11 +111,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Regiones
+                            Tipos de Proyecto
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de regiones</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Lista de tipos de proyecto</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Charts
@@ -125,58 +125,32 @@
 
                         </ol>
                         <?php
-    require_once "../models/Ciudad.php";
-    require_once "../models/Region.php";
-
-
-    $id_ciu = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
- 
-    if( ! $id_ciu )
+    require_once "../models/TipoProyecto.php";
+    $id_tipo = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
+    if( ! $id_tipo )
     {
         header("Location:" .  "list.php");
     }
     $db = new Database;
-    $newCiudad = new Ciudad($db);
-    $newCiudad->setID($id_ciu);
-    $ciudad = $newCiudad->get();
-    $newCiudad->checkUser($ciudad);
-  
+    $newTipoProyecto = new TipoProyecto($db);
+    $newTipoProyecto->setId($id_tipo);
+    $tipoproyecto = $newTipoProyecto->get();
+    $newTipoProyecto->checkUser($tipoproyecto);
     ?>
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center text-primary">Editar Ciudad <?php echo $ciudad->name_ciu ?></h2>
+            <h2 class="text-center text-primary">Editar Tipo <?php echo $tipoproyecto->descrip_tipo ?></h2>
             <form action="update.php" method="POST">
-                      
-                    <div class="form-group">
-                    <label for="username">Nombre de Ciudad</label>
-                    <input type="text" name="name_ciu" value="<?php echo $ciudad->name_ciu ?>" class="form-control" id="username" placeholder="NOMBRE CIUDAD">
-                    </div>
-
-                       <div class="form-group">
-                        <label for="username">Region Pertenece</label>
-                    
-                        <select type="number" name="id_reg"  class="form-control" id="username" placeholder="Username">
-                        <?php 
-                           $db = new Database;
-                           $region = new Region($db);
-                           $regiones = $region->get();
-                           foreach($regiones as $region){
-                              $region->id_reg; 
-                              $region->name_reg;
-
-                              echo '<option value = "'.$region->id_reg.'">'.$region->name_reg.'</option>';
-                            
-                           }
-
-                        ?>
-                 </div>
-
-                    
-                   
-                    <input type="hidden" name="id_ciu" value="<?php echo $ciudad->id_ciu ?>" />
-                    <input type="submit" name="submit" class="btn btn-default" value="Update user" />
-                    </form>
-                    </div>
+                         
+            
+            <div class="form-group">
+                    <label for="username">Descripcion Tipo</label>
+                    <input type="text" name="descrip_tipo" value="<?php echo $tipoproyecto->descrip_tipo ?>" class="form-control" id="username" placeholder="Username">
+                </div>
+                <input type="hidden" name="id_tipo" value="<?php echo $tipoproyecto->id_tipo ?>" />
+                <input type="submit" name="submit" class="btn btn-default" value="Update user" />
+            </form>
+        </div>
     </div>
                     </div>
                 </div>
@@ -187,9 +161,9 @@
 
                 <!-- Morris Charts -->
                
-                <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
 
-                </div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>

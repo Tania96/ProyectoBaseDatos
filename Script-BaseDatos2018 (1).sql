@@ -48,15 +48,18 @@ PRIMARY KEY (id_cat)
 );
 
 CREATE TABLE INVESTIGADOR(
-rut_inv varchar(10) not null,
+id_inv integer not null,
+rut_inv varchar(10),
 name_inv varchar(50),
 calle_inv varchar(50),
 numero_inv integer,
 id_cat integer,
 id_ciu integer,
-PRIMARY KEY (rut_inv), 
+id_rol integer,
+PRIMARY KEY (id_inv), 
 FOREIGN KEY (id_cat) REFERENCES CATEGORIA(id_cat),
-FOREIGN KEY (id_ciu) REFERENCES CIUDAD(id_ciu)
+FOREIGN KEY (id_ciu) REFERENCES CIUDAD(id_ciu),
+FOREIGN KEY (id_rol) REFERENCES ROL(id_rol)
 );
 
 CREATE TABLE AREA_CONOCIMIENTO(
@@ -118,42 +121,42 @@ PRIMARY KEY (id_art)
 
 CREATE TABLE POSEEN(
 id_centro integer,
-rut_inv varchar(10),
+id_inv integer,
 id_rol integer,
 FOREIGN KEY (id_centro) REFERENCES CENTRO_INVESTIGACION(id_centro),
-FOREIGN KEY (rut_inv) REFERENCES INVESTIGADOR(rut_inv),
+FOREIGN KEY (id_inv) REFERENCES INVESTIGADOR(id_inv),
 FOREIGN KEY (id_rol) REFERENCES ROL(id_rol)
 );
 
 CREATE TABLE POSTULAN(
-rut_inv varchar(10),
+id_inv integer,
 num_proy integer,
-FOREIGN KEY (rut_inv) REFERENCES INVESTIGADOR(rut_inv),
+FOREIGN KEY (id_inv) REFERENCES INVESTIGADOR(id_inv),
 FOREIGN KEY (num_proy) REFERENCES PROYECTO(num_proy)
 );
 
 CREATE TABLE PERTENECE(
-rut_inv varchar(10),
+id_inv integer,
 id_u integer,
-FOREIGN KEY (rut_inv) REFERENCES INVESTIGADOR(rut_inv),
+FOREIGN KEY (id_inv) REFERENCES INVESTIGADOR(id_inv),
 FOREIGN KEY (id_u) REFERENCES UNIVERSIDAD(id_u)
 );
 
 CREATE TABLE ADJUDICAN(
-rut_inv varchar(10),
+id_inv integer,
 num_proy integer,
 fecha_adj DATE,
 monto_aceptado integer,
 fecha_termino DATE,
-FOREIGN KEY (rut_inv) REFERENCES INVESTIGADOR(rut_inv),
+FOREIGN KEY (id_inv) REFERENCES INVESTIGADOR(id_inv),
 FOREIGN KEY (num_proy) REFERENCES PROYECTO(num_proy)
 );
 
 CREATE TABLE ESCRIBE(
 id_art integer,
-rut_inv varchar(10),
+id_inv integer,
 FOREIGN KEY (id_art) REFERENCES ARTICULO(id_art),
-FOREIGN KEY (rut_inv) REFERENCES INVESTIGADOR(rut_inv)
+FOREIGN KEY (id_inv) REFERENCES INVESTIGADOR(id_inv)
 );
 
 CREATE TABLE SE_PUBLICA(

@@ -6,7 +6,7 @@ $id_u = filter_input(INPUT_GET, 'user', FILTER_VALIDATE_INT);
  
 if( $id_u )
 {
-    $ciudad->setId($id_u);
-    $ciudad->delete();
+    $universidad->setId($id_u);
+    $universidad->delete();
 }
 header("Location:" . "list.php");
